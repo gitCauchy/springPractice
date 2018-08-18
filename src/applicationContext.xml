@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+	xmlns:p="http://www.springframework.org/schema/p">
+	<!-- ioc 入门 -->
+	<bean id = "user" class = "com.cauchy.ioc.User"></bean>
+	<!-- 使用静态工厂方式来创建类 -->
+	<bean id = "bean2" class = "com.cauchy.bean.Bean2Factory" factory-method="getBean2"></bean>
+	<!-- 使用实例化工厂创建 -->
+	<bean id = "bean3Factory" class = "com.cauchy.bean.Bean3Factory"></bean>
+	<bean id = "bean3" factory-bean="bean3Factory" factory-method = "getBean3"></bean>
+	<bean id = "propertyDemo1" class = "com.cauchy.property.PropertyDemo1">
+		<!-- 有参构造函数构造 -->
+		<!-- 使用constructor-arg属性来设置 -->
+		<!-- 配置name和value两个值 -->
+		<constructor-arg name = "userName" value = "Cauchy"></constructor-arg>
+	</bean>
+	<!-- set方法注入 -->
+	<bean id = "book" class = "com.cauchy.property.Book">
+		<property name="bookName" value = "Happy"></property>
+	</bean>
+	<bean id = "userDao" class = "com.cauchy.property.UserDao"></bean>
+	<bean id = "userService" class = "com.cauchy.property.UserService">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+	<bean id = "person" class = "com.cauchy.property.Person" p:pname = "Lucy">
+		<property name="arrs">
+			<list>
+				<value>Lucy</value>
+				<value>Cauchy</value>
+			</list>
+		</property>
+		<property name="list">
+			<list>
+				<value>Marry</value>
+				<value>Tom</value>
+			</list>
+		</property>
+		<property name="map">
+			<map>
+				<entry key = "aaa" value = "bbb"></entry>
+				<entry key = "ccc" value = "ddd"></entry>
+			</map>
+		</property>
+		<property name="properties">
+			<props>
+				<prop key="driverclass">com.mysql.Driver</prop>
+				<prop key="name">root</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

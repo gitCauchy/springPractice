@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
     xmlns:context="http://www.springframework.org/schema/context" 
     xmlns:p="http://www.springframework/schema/p"
     xsi:schemaLocation="
+    	http://www.springframework.org/schema/aop
+    	http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
@@ -64,4 +67,20 @@
 	<bean id = "bookService" class = "com.cauchy.anno.BookService"></bean>
 	<bean id = "bookDao" class = "com.cauchy.anno.BookDao"></bean>
 	<bean id = "orderDao" class = "com.cauchy.anno.OrderDao" ></bean>
+	<!-- 配置对象 -->
+	<bean id = "aopBook" class = "com.cauchy.aop.AopBook"></bean>
+	<bean id = "myBook" class = "com.cauchy.aop.MyBook"></bean>
+	<!-- 配置aop操作 -->
+	<aop:config>
+		<!-- 配置切入点 -->
+		<aop:pointcut expression="execution(* com.cauchy.aop.AopBook.add(..))" id="pointcut1"/>
+		<!-- 配置切面 -->
+		<aop:aspect ref = "myBook">
+			<!-- 配置增强类型 -->
+			<aop:before method="before1" pointcut-ref="pointcut1"/>
+			<aop:after method="after1" pointcut-ref="pointcut1"/>
+			<aop:around method="around1" pointcut-ref="pointcut1"/>
+		</aop:aspect>
+	</aop:config>
+	
 </beans>
